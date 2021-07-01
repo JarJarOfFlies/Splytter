@@ -55,10 +55,9 @@ def reAllocate(cash, boi):
     for i in budget:
         if i[2] > 0:
             pSum += i[1]
-        else:
-            i[1]=0
     for i in budget:
-        i[2] = round((float(i[1])/pSum)*income, 2)
+        if i[2]>0:
+            i[2] = round((float(i[1])/pSum)*income, 2)
     return budget
 '''
 In budget, 0 is name, 1 is share, 2 is remaining funds and 3 is remaining
@@ -73,6 +72,9 @@ def spend():
     while purchase != -1:
         print("Item Code:")
         purchase = int(input())
+        if purchase == -1:
+            print('Take care now')
+            continue
         print("Amount:")
         amount = float(input())
         if amount > income:
@@ -93,7 +95,5 @@ def spend():
             budget[purchase][3] = round(float(budget[purchase][2]) 
                 -amount, 2)
         printBudget(income, budget)
-
-
 
 spend()
