@@ -42,14 +42,24 @@ def reBudget(cash, boi):
             pSum += i[1]
         else:
             i[1]=0
-    counter = 0
     for i in budget:
-        budget[counter][1] = round(float(budget[counter][1])/pSum, 2)
-        if budget[counter][3] >= 0:
-            budget[counter][2] = round(float(budget[counter][1])*income, 2)
-        counter += 1
+        i[1] = round(float(i[1])/pSum, 5)
+        if i[3] >= 0:
+            i[2] = round(float(i[1])*income, 2)
     return budget
 
+def reAllocate(cash, boi):
+    income = cash
+    budget = boi
+    pSum = 0.00
+    for i in budget:
+        if i[2] > 0:
+            pSum += i[1]
+        else:
+            i[1]=0
+    for i in budget:
+        i[2] = round((float(i[1])/pSum)*income, 2)
+    return budget
 '''
 In budget, 0 is name, 1 is share, 2 is remaining funds and 3 is remaining
  relative to first allocation
@@ -73,7 +83,7 @@ def spend():
             budget[purchase][3] -= amount
             if budget[purchase][3] >= 0:
                 budget[purchase][2] = 0
-                budget = reBudget(income, budget)
+                budget = reAllocate(income, budget)
             else:
                 budget[purchase][2] -= amount
                 budget = reBudget(income, budget)
