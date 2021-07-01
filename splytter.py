@@ -87,7 +87,7 @@ def spend():
                 budget[purchase][2] = 0
                 budget = reAllocate(income, budget)
             else:
-                budget[purchase][2] -= amount
+                budget[purchase][2] = budget[purchase][3]
                 budget = reBudget(income, budget)
         else:
             budget[purchase][2] = round(float(budget[purchase][2]) 
